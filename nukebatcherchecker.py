@@ -10,7 +10,7 @@ USERNAMEvar=socket.gethostname()
 DATE=datetime.datetime.now()
 
 #change this to local server location
-SERVERLOCvar='X:/TECH/nukebutcher'
+SERVERLOCvar='Y:/TECH/constellationRenderNuke'
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -2192,7 +2192,7 @@ class Ui_Form(object):
         return
 
     def retranslateUi(self, Form):
-        Form.setWindowTitle(QtGui.QApplication.translate("Form", "Nuke Batcher Checker", None, QtGui.QApplication.UnicodeUTF8))
+        Form.setWindowTitle(QtGui.QApplication.translate("Form", "Constellation Render Manager [NUKE]", None, QtGui.QApplication.UnicodeUTF8))
         self.JOBtw.horizontalHeaderItem(0).setText(QtGui.QApplication.translate("Form", "ID", None, QtGui.QApplication.UnicodeUTF8))
         self.JOBtw.horizontalHeaderItem(1).setText(QtGui.QApplication.translate("Form", "File", None, QtGui.QApplication.UnicodeUTF8))
         self.JOBtw.horizontalHeaderItem(2).setText(QtGui.QApplication.translate("Form", "Queue", None, QtGui.QApplication.UnicodeUTF8))

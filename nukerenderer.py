@@ -7,7 +7,7 @@ USERNAMEvar=socket.gethostname()
 DATE=datetime.datetime.now()
 
 #change this to local working location
-SERVERLOCvar='X:/TECH/nukebutcher'
+SERVERLOCvar='Y:/TECH/constellationRenderNuke'
 
 CONSOLERETvar=''
 RENSTATvar='VAC'
@@ -384,7 +384,7 @@ class Ui_NUKEWATCHERfrm(QtGui.QWidget):
             self.setWindowState(QtCore.Qt.WindowMinimized)
 
     def retranslateUi(self):
-        self.setWindowTitle(QtGui.QApplication.translate("NUKEWATCHERfrm", "Nuke Batcher ["+USERNAMEvar+"]", None, QtGui.QApplication.UnicodeUTF8))
+        self.setWindowTitle(QtGui.QApplication.translate("NUKEWATCHERfrm", "Constellation Render Manager [NUKE] ["+USERNAMEvar+"]", None, QtGui.QApplication.UnicodeUTF8))
         self.STOPbtn.setText(QtGui.QApplication.translate("NUKEWATCHERfrm", "STOP NUKE BATCH RENDERER", None, QtGui.QApplication.UnicodeUTF8))
         return
   
