@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/nuke_renderer.iml" filepath="$PROJECT_DIR$/.idea/nuke_renderer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/constellationRenderNuke.iml" filepath="$PROJECT_DIR$/.idea/constellationRenderNuke.iml" />
     </modules>
   </component>
 </project>

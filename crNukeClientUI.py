@@ -1,3 +1,8 @@
+#Constellation Render Manager Nuke v1.0
+#Andrew Willis 2014
+
+#Renderer Module
+
 from PyQt4 import QtCore, QtGui
 import socket, datetime, os, shutil, sys, time
 from threading import Thread
@@ -6,8 +11,11 @@ import subprocess
 USERNAMEvar=socket.gethostname()
 DATE=datetime.datetime.now()
 
+#Determining root path
+rootPathVar=os.path.dirname(os.path.realpath(__file__)).replace('\\','/')
+
 #change this to local working location
-SERVERLOCvar='X:/TECH/nukebutcher'
+SERVERLOCvar=rootPathVar
 
 CONSOLERETvar=''
 RENSTATvar='VAC'
@@ -216,25 +224,24 @@ class Ui_NUKEWATCHERfrm(QtGui.QWidget):
 
     def CHECKERfn(self,NAMEvar):
         global EXITCOMvar
-        OPENSTATvar=open(SERVERLOCvar+'/data/clients/'+USERNAMEvar+'.clt','w')
-        OPENSTATvar.close()
-        JOBlis=os.listdir(SERVERLOCvar+'/data/jobs/1queue')
-        if JOBlis<>[]:
-            try:
-                self.RENDERfn()
-            except Exception as err:
-                pass
-        else:
-            time.sleep(5)
+        while True:
+            OPENSTATvar=open(SERVERLOCvar+'/data/clients/'+USERNAMEvar+'.clt','w')
+            OPENSTATvar.close()
+            JOBlis=os.listdir(SERVERLOCvar+'/data/jobs/1queue')
+            if JOBlis<>[]:
+                try:
+                    self.RENDERfn()
+                except Exception as err:
+                    pass
+            else:
+                time.sleep(5)
 
-        if EXITCOMvar==1:
-            try:
-                os.remove(SERVERLOCvar+'/data/clients/'+USERNAMEvar+'.clt')
-            except:
-                pass
-            os._exit(0)
-            
-        self.CHECKERfn('a')
+            if EXITCOMvar==1:
+                try:
+                    os.remove(SERVERLOCvar+'/data/clients/'+USERNAMEvar+'.clt')
+                except:
+                    pass
+                os._exit(0)
         return   
     
     def RENDERfn(self):
@@ -253,22 +260,18 @@ class Ui_NUKEWATCHERfrm(QtGui.QWidget):
 
         #PRE-RENDER=====================================================================================================
         JOBROOTvar=os.listdir(SERVERLOCvar+'/data/jobs/1queue')
-
         JOBROOTvar.sort()
-
         #Take out HOLD==================================================================================================
         for chk in HOLDlis:
             if chk in JOBROOTvar:
                 JOBROOTvar.remove(chk)
         #Take out HOLD==================================================================================================
 
-
         if JOBROOTvar==[]:
             RENSTATvar='VAC'
             raise StandardError , 'error: empty job list'
 
         JOBROOTvar=JOBROOTvar[0]
-
 
         JOBvar=os.listdir(SERVERLOCvar+'/data/jobs/1queue/'+JOBROOTvar)
         
@@ -295,17 +298,9 @@ class Ui_NUKEWATCHERfrm(QtGui.QWidget):
         OPENvar.close()
         
         OUTPUTSTRvar=READvar[1]
-        CHECKvar=''
-        for chk in OUTPUTSTRvar:
-            if chk=='/':
-                CHECKvar=CHECKvar+chk
-                if os.path.isdir(CHECKvar)==False:
-                    os.mkdir(CHECKvar)
-            else:
-                CHECKvar=CHECKvar+chk
+        OUTPUTSTRvar=OUTPUTSTRvar[:OUTPUTSTRvar.rfind('/')]
         if os.path.isdir(OUTPUTSTRvar)==False:
             os.mkdir(OUTPUTSTRvar)
-
         #PRE-RENDER=====================================================================================================
 
         #RENDER=========================================================================================================
@@ -324,7 +319,11 @@ class Ui_NUKEWATCHERfrm(QtGui.QWidget):
             STARTvar=FRAMERANGEvar[:FRAMERANGEvar.find('-')]
             ENDvar=FRAMERANGEvar[FRAMERANGEvar.find('-')+1:]
 
-            OUTPUTlis=os.listdir(READvar[1])
+            nameRoot=READvar[1]
+            nameRoot=nameRoot[nameRoot.rfind('/')+1:nameRoot.find('%')]
+            pathRoot=READvar[1][:READvar[1].rfind('/')+1]
+            OUTPUTlis=os.listdir(pathRoot)
+
 
             #Render Confirmation Check
             OKlis=[]
@@ -336,11 +335,9 @@ class Ui_NUKEWATCHERfrm(QtGui.QWidget):
                 elif len(str(chk))==3:
                     chk='0'+str(chk)
 
-                if READvar[1][READvar[1].rfind('/')+1:]+'_'+str(chk)+'.png' in OUTPUTlis:
-                    print 'PASS'
+                if nameRoot+str(chk)+'.png' in OUTPUTlis:
                     OKlis.append('PASS')
                 else:
-                    print 'FAIL'
                     OKlis.append('FAIL')
 
             if 'FAIL' not in OKlis:
@@ -348,11 +345,9 @@ class Ui_NUKEWATCHERfrm(QtGui.QWidget):
             else:
                 print '[RENDER FAILURE RE-RENDER LAST JOB]'
                 TIMEOUTvar+=1
-
         #RENDER=========================================================================================================
         
         #POST-RENDER====================================================================================================
-
         #Write status to server=======================
         OPENSTATvar=open(SERVERLOCvar+'/data/clients/'+USERNAMEvar+'.clt','w')
         OPENSTATvar.write('COOLDOWN')
@@ -384,7 +379,7 @@ class Ui_NUKEWATCHERfrm(QtGui.QWidget):
             self.setWindowState(QtCore.Qt.WindowMinimized)
 
     def retranslateUi(self):
-        self.setWindowTitle(QtGui.QApplication.translate("NUKEWATCHERfrm", "Nuke Batcher ["+USERNAMEvar+"]", None, QtGui.QApplication.UnicodeUTF8))
+        self.setWindowTitle(QtGui.QApplication.translate("NUKEWATCHERfrm", "Constellation Render Nuke Client ["+USERNAMEvar+"]", None, QtGui.QApplication.UnicodeUTF8))
         self.STOPbtn.setText(QtGui.QApplication.translate("NUKEWATCHERfrm", "STOP NUKE BATCH RENDERER", None, QtGui.QApplication.UnicodeUTF8))
         return
   

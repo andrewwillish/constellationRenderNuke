@@ -1,5 +1,7 @@
-#NUKE BATCHER CHECKER v2.0
+#Constellation Render Manager Nuke v1.0
 #Andrew Willis 2014
+
+#Controller Module
 
 from PyQt4 import QtCore, QtGui
 import socket, datetime, os, shutil, sys, time
@@ -9,8 +11,11 @@ import subprocess
 USERNAMEvar=socket.gethostname()
 DATE=datetime.datetime.now()
 
+#Determining root path
+rootPathVar=os.path.dirname(os.path.realpath(__file__)).replace('\\','/')
+
 #change this to local server location
-SERVERLOCvar='X:/TECH/nukebutcher'
+SERVERLOCvar=rootPathVar
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -2032,7 +2037,6 @@ class Ui_Form(object):
         JOBvar=JOBvar.replace(' [','')
         JOBvar=JOBvar.replace('] ','')
 
-        print JOBvar
         try:
             OPENvar=open(SERVERLOCvar+'/data/jobs/1queue/'+JOBvar+'/'+os.listdir(SERVERLOCvar+'/data/jobs/1queue/'+JOBvar)[0])
             TARGETvar=OPENvar.readlines()[1]
@@ -2054,9 +2058,8 @@ class Ui_Form(object):
         except:
             pass
 
-        print TARGETvar
+        TARGETvar=TARGETvar[:TARGETvar.rfind('/')]
         os.system('%SystemRoot%\explorer.exe '+TARGETvar.replace('/','\\'))
-
         return
 
     def POPULATEfn(self):
@@ -2192,7 +2195,7 @@ class Ui_Form(object):
         return
 
     def retranslateUi(self, Form):
-        Form.setWindowTitle(QtGui.QApplication.translate("Form", "Nuke Batcher Checker", None, QtGui.QApplication.UnicodeUTF8))
+        Form.setWindowTitle(QtGui.QApplication.translate("Form", "Constellation Render Nuke Controller", None, QtGui.QApplication.UnicodeUTF8))
         self.JOBtw.horizontalHeaderItem(0).setText(QtGui.QApplication.translate("Form", "ID", None, QtGui.QApplication.UnicodeUTF8))
         self.JOBtw.horizontalHeaderItem(1).setText(QtGui.QApplication.translate("Form", "File", None, QtGui.QApplication.UnicodeUTF8))
         self.JOBtw.horizontalHeaderItem(2).setText(QtGui.QApplication.translate("Form", "Queue", None, QtGui.QApplication.UnicodeUTF8))

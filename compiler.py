@@ -1,11 +1,11 @@
 try:
-    import nukebatcherchecker
-    reload (nukebatcherchecker)
+    import crNukeControllerUI
+    reload (crNukeControllerUI)
 except:
     pass
 
 try:
-    import nukerenderer
-    reload (nukerenderer)
+    import crNukeClientUI
+    reload (crNukeClientUI)
 except:
     pass
