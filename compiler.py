@@ -1,7 +1,8 @@
 try:
     import crNukeControllerUI
     reload (crNukeControllerUI)
-except:
+except Exception as e:
+    print str(e)
     pass
 
 try:

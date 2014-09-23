@@ -13,7 +13,7 @@ DATE=datetime.datetime.now()
 rootPathVar=os.path.dirname(os.path.realpath(__file__)).replace('\\','/')
 
 SERVERvar=rootPathVar
-NUKEDIRvar='C:\Program Files\Nuke7.0v4\Nuke7.0.exe'
+NUKEDIRvar='C:\Program Files\Nuke7.0v5\Nuke7.0.exe'
 
 
 class NUKEBATCHERSUBMITTERcls:

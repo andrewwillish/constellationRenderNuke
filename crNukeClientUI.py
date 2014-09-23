@@ -246,7 +246,6 @@ class Ui_NUKEWATCHERfrm(QtGui.QWidget):
     
     def RENDERfn(self):
         global CONSOLERETvar, RENSTATvar
-
         #GET HOLD CHECK=================================================================================================
         OPENvar=open(SERVERLOCvar+'/data/hld.ini','r')
         READvar=OPENvar.readlines()
@@ -256,7 +255,6 @@ class Ui_NUKEWATCHERfrm(QtGui.QWidget):
         for chk in READvar:
             HOLDlis.append(chk.replace('\n',''))
         #GET HOLD CHECK=================================================================================================
-
 
         #PRE-RENDER=====================================================================================================
         JOBROOTvar=os.listdir(SERVERLOCvar+'/data/jobs/1queue')
@@ -288,7 +286,7 @@ class Ui_NUKEWATCHERfrm(QtGui.QWidget):
 
         if os.path.isdir(SERVERLOCvar+'/data/jobs/2wip/'+JOBROOTvar)==False:
             os.mkdir(SERVERLOCvar+'/data/jobs/2wip/'+JOBROOTvar)
-            
+
         shutil.move(SERVERLOCvar+'/data/jobs/1queue/'+JOBROOTvar+'/'+JOBvar,SERVERLOCvar+'/data/jobs/2wip/'+JOBROOTvar+'/'+JOBvar)
         if os.listdir(SERVERLOCvar+'/data/jobs/1queue/'+JOBROOTvar)==[]:
             os.rmdir(SERVERLOCvar+'/data/jobs/1queue/'+JOBROOTvar)
@@ -299,8 +297,9 @@ class Ui_NUKEWATCHERfrm(QtGui.QWidget):
         
         OUTPUTSTRvar=READvar[1]
         OUTPUTSTRvar=OUTPUTSTRvar[:OUTPUTSTRvar.rfind('/')]
+        print OUTPUTSTRvar
         if os.path.isdir(OUTPUTSTRvar)==False:
-            os.mkdir(OUTPUTSTRvar)
+            os.makedirs(OUTPUTSTRvar)
         #PRE-RENDER=====================================================================================================
 
         #RENDER=========================================================================================================
@@ -324,6 +323,7 @@ class Ui_NUKEWATCHERfrm(QtGui.QWidget):
             pathRoot=READvar[1][:READvar[1].rfind('/')+1]
             OUTPUTlis=os.listdir(pathRoot)
 
+            extension=READvar[1][READvar[1].rfind('.'):]
 
             #Render Confirmation Check
             OKlis=[]
@@ -335,7 +335,7 @@ class Ui_NUKEWATCHERfrm(QtGui.QWidget):
                 elif len(str(chk))==3:
                     chk='0'+str(chk)
 
-                if nameRoot+str(chk)+'.png' in OUTPUTlis:
+                if nameRoot+str(chk)+str(extension) in OUTPUTlis:
                     OKlis.append('PASS')
                 else:
                     OKlis.append('FAIL')
